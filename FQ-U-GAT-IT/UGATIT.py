@@ -635,17 +635,14 @@ class UGATIT(object) :
                     save_images(fake_B, [self.batch_size, 1],
                                 './{}/fake_B_{:03d}_{:05d}.png'.format(self.sample_dir, epoch, idx+1))
 
-                # if np.mod(idx + 1, self.save_freq) == 0:
-                #     self.save(self.checkpoint_dir, counter)
+                if np.mod(idx + 1, self.save_freq) == 0:
+                    self.save(self.checkpoint_dir, counter)
 
             # After an epoch, start_batch_id is set to zero
             # non-zero value is only for the first epoch after loading pre-trained model
             start_batch_id = 0
             # if epoch % 2 == 0:
             self.test(epoch)
-            # save model for final step
-            if np.mod(epoch+1, 5) == 0:
-                self.save(self.checkpoint_dir, counter)
 
 
 
@@ -676,6 +673,7 @@ class UGATIT(object) :
             print(" [*] Success to read {}".format(ckpt_name))
             return True, counter
         else:
+            print(checkpoint_dir)
             print(" [*] Failed to find a checkpoint")
             return False, 0
 
